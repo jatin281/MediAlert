@@ -1,6 +1,8 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { useEffect } from 'react';
 import Home from './pages/Home';
 
 /* Core CSS required for Ionic components to work properly */
@@ -43,7 +45,22 @@ import AlertScreen from './pages/Alerts/AlertScreen';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+
+const App: React.FC = () => {
+
+  useEffect(() => {
+    const requestNotificationPermissions = async () => {
+      try {
+        await LocalNotifications.requestPermissions();
+      } catch (error) {
+        console.error('Error requesting notification permissions:', error);
+      }
+    };
+    
+    requestNotificationPermissions();
+  }, []);
+  
+return(
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
@@ -64,6 +81,7 @@ const App: React.FC = () => (
     </IonReactRouter>
   </IonApp>
 );
+}
 
 
 
