@@ -35,8 +35,11 @@ import './theme/variables.css';
 import LoginScreen from './pages/LoginScreen';
 import OTPScreen from './pages/OtpScreen';
 import HomeScreen from './pages/HomeScreen';
-import MedicineListScreen from './pages/MedicineListScreen';
+import MedicineListScreen from './pages/Medicines/MedicineListScreen';
 import PrescriptionsScreen from './pages/PrescriptionsScreen';
+import OnboardingName from './pages/Onboarding/OnboardingName';
+import OnboardingGenderDOB from './pages/Onboarding/OnboardingGenderDOB';
+import AlertScreen from './pages/Alerts/AlertScreen';
 
 setupIonicReact();
 
@@ -44,6 +47,8 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+      <Route exact path="/name" component={OnboardingName}/>
+      <Route exact path="/gender-dob" component={OnboardingGenderDOB}/>
         <Route exact path="/login">
           <LoginScreen />
         </Route>
@@ -51,12 +56,15 @@ const App: React.FC = () => (
         <Route exact path="/home" component={HomeScreen}/>
         <Route exact path="/medicine-list" component={MedicineListScreen}/>
         <Route exact path="/prescriptions" component={PrescriptionsScreen}/>
+        <Route exact path="/alerts" component={AlertScreen}/>
         <Route exact path="/">
-          <Redirect to="/login"/>
+          <Redirect to="/home"/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );
+
+
 
 export default App;

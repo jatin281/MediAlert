@@ -1,0 +1,106 @@
+.ion-padding {
+    padding: 16px;
+  }
+  
+  .ion-text-center {
+    text-align: center;
+  }
+  
+  .ion-padding-vertical {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  /* New Card Styles */
+  .medicine-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .image-container {
+    width: 48px;
+    height: 48px;
+    background-color: rgb(255, 237, 213);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .medicine-image {
+    width: 24px;
+    height: 24px;
+    background-color: rgb(21, 128, 61);
+    border-radius: 4px;
+  }
+  
+  .medicine-info {
+    flex: 1;
+  }
+  
+  .medicine-info h3 {
+    margin: 0;
+    font-weight: 500;
+    color: #1f2937;
+  }
+  
+  .dosage-text {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .quantity-info {
+    text-align: right;
+  }
+  
+  .quantity-number {
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+  }
+  
+  .quantity-label {
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .details-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 12px;
+  }
+  
+  .expand-icon {
+    color: rgb(251, 146, 60);
+    font-size: 20px;
+  }

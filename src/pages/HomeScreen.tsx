@@ -100,7 +100,8 @@ const HomeScreen: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCol size="6">
-              <IonCard style={{ backgroundColor: "#E7F4F4" }}>
+              <IonCard button onClick={() => history.push('/alerts')}
+              style={{ backgroundColor: "#E7F4F4" }}>
                 <IonCardHeader>
                   <IonCardTitle style={{ textAlign: "center" }}>Alerts</IonCardTitle>
                 </IonCardHeader>

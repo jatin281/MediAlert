@@ -1,0 +1,28 @@
+.onboarding-container {
+    background-color: #ffffff;
+    height: 100%;
+  }
+  
+  .onboarding-heading {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .onboarding-input-container {
+    margin-top: 20px;
+  }
+  
+  .onboarding-next-button {
+    margin-top: 40px;
+    --background: #6366f1; /* Tailwind Indigo-500 */
+    --background-hover: #4f46e5; /* Tailwind Indigo-600 */
+    --border-radius: 8px;
+  }
+  
+  .onboarding-skip-button {
+    color: #6b7280; /* Tailwind Gray-500 */
+    text-decoration: underline;
+    font-size: 0.9rem;
+  }
+  
