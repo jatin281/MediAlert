@@ -1,0 +1,47 @@
+.header-logo {
+    height: 24px;
+  }
+  
+  .profile-menu-container {
+    padding-right: 16px;
+  }
+  
+  .home-grid {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .welcome-section {
+    margin-bottom: 24px;
+  }
+  
+  .welcome-text {
+    color: var(--ion-color-medium);
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .user-name {
+    margin: 4px 0 0;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  
+  .name-skeleton {
+    width: 150px;
+    height: 28px;
+  }
+  
+  .error-text {
+    color: var(--ion-color-danger);
+    font-weight: 700;
+  }
+  
+  .features-title {
+    font-size: 20px;
+    margin: 32px 0 16px;
+  }
+  
+  .features-grid {
+    gap: 16px;
+  }

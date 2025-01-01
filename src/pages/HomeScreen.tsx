@@ -12,114 +12,93 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonButton,
-  IonAvatar,
+  IonSkeletonText,
   IonIcon,
 } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
-import { personCircle, clipboardOutline, notificationsOutline, locateOutline } from 'ionicons/icons'; // Replace icons with placeholders
+import { useHomeScreen } from '../hooks/useHomeScreen';
+import ProfileMenu from '../components/ProfileMenu';
 
 const HomeScreen: React.FC = () => {
-    const history = useHistory();
+  const {
+    userData,
+    userLoading,
+    userError,
+    nextMedicine,
+    medicineLoading,
+    featureCards,
+    handleCardClick,
+    handleNextMedicineClick
+  } = useHomeScreen();
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Dashboard</IonTitle>
+          <IonTitle>MediAlert</IonTitle>
           <div slot="end" style={{ paddingRight: "16px" }}>
-            <IonAvatar>
-              <img
-                src="https://via.placeholder.com/150" // Placeholder for profile image
-                alt="Profile"
-              />
-            </IonAvatar>
+            <ProfileMenu userImage={userData?.image} />
           </div>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="ion-padding">
         <IonGrid>
-          {/* Welcome Section */}
           <IonRow>
-            <IonCol size="12">
-              <h2>Welcome,</h2>
-              <h1 style={{ fontWeight: "bold" }}>Jatin Chandra</h1>
-              <IonButton size="small" fill="outline" style={{ float: "right" }}>
-                All Data
-              </IonButton>
+            <IonCol>
+              <h2 style={{ margin: "0", color: "var(--ion-color-medium)" }}>Welcome,</h2>
+              {userLoading ? (
+                <IonSkeletonText animated style={{ width: '150px', height: '32px' }} />
+              ) : (
+                <h1 style={{ margin: "4px 0 24px", fontSize: "32px", fontWeight: "600" }}>
+                  {userData?.name}
+                </h1>
+              )}
             </IonCol>
           </IonRow>
 
-          {/* Next Medicine Section */}
-          <IonRow>
-            <IonCol size="12">
-              <IonCard>
-                <IonCardContent>
-                  <h3>Next Medicine</h3>
-                  <p>Medicine name here at <strong>04:27 PM</strong></p>
-                  <IonButton fill="clear" color="primary">
-                    Tell me more
-                  </IonButton>
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
+          <IonCard style={{ margin: "0 0 32px" }}>
+            <IonCardContent>
+              <h3 style={{ margin: "0 0 8px", color: "var(--ion-color-medium)" }}>Next Medicine</h3>
+              {medicineLoading ? (
+                <IonSkeletonText animated style={{ width: '60%' }} />
+              ) : nextMedicine ? (
+                <>
+                  <p style={{ margin: "0" }}>
+                    Medicine name here <span style={{ color: "var(--ion-color-medium)" }}>at {nextMedicine.nextAlertTime}</span>
+                  </p>
+                  <a style={{ color: "var(--ion-color-primary)", fontSize: "14px" }}>Tell me more</a>
+                </>
+              ) : (
+                <p style={{ margin: "0", color: "var(--ion-color-medium)" }}>No upcoming medicine alerts</p>
+              )}
+            </IonCardContent>
+          </IonCard>
 
-          {/* Highlights Section */}
+          <h2 style={{ fontSize: "20px", marginBottom: "16px" }}>Features</h2>
           <IonRow>
-            <IonCol size="12">
-              <h2>Highlights</h2>
-              <IonButton size="small" fill="clear" style={{ float: "right" }}>
-                View more
-              </IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="6">
-              <IonCard  button onClick={() => history.push('/medicine-list')}
-               style={{ backgroundColor: "#EAF4FE" }}>
-                <IonCardHeader>
-                  <IonCardTitle style={{ textAlign: "center" }}>Your Meds</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent style={{ textAlign: "center" }}>
-                  <IonIcon icon={clipboardOutline} size="large" /> {/* Placeholder */}
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-            <IonCol size="6">
-              <IonCard   button onClick={() => history.push('/prescriptions')}
-              style={{ backgroundColor: "#FCEBE8" }}>
-                <IonCardHeader>
-                  <IonCardTitle style={{ textAlign: "center" }}>Prescription</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent style={{ textAlign: "center" }}>
-                  <IonIcon icon={personCircle} size="large" /> {/* Placeholder */}
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="6">
-              <IonCard button onClick={() => history.push('/alerts')}
-              style={{ backgroundColor: "#E7F4F4" }}>
-                <IonCardHeader>
-                  <IonCardTitle style={{ textAlign: "center" }}>Alerts</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent style={{ textAlign: "center" }}>
-                  <IonIcon icon={notificationsOutline} size="large" /> {/* Placeholder */}
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-            <IonCol size="6">
-              <IonCard style={{ backgroundColor: "#E9E8FC" }}>
-                <IonCardHeader>
-                  <IonCardTitle style={{ textAlign: "center" }}>Track</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent style={{ textAlign: "center" }}>
-                  <IonIcon icon={locateOutline} size="large" /> {/* Placeholder */}
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
+            {featureCards.map(card => (
+              <IonCol key={card.title} size="6" style={{ marginBottom: "16px" }}>
+                <IonCard 
+                  button 
+                  onClick={() => handleCardClick(card.route)}
+                  style={{ 
+                    margin: "0",
+                    backgroundColor: card.backgroundColor,
+                    borderRadius: "16px",
+                    height: "140px"
+                  }}
+                >
+                  <IonCardHeader>
+                    <IonCardTitle style={{ textAlign: "center", fontSize: "16px" }}>
+                      {card.title}
+                    </IonCardTitle>
+                  </IonCardHeader>
+                  <IonCardContent style={{ textAlign: "center" }}>
+                    <IonIcon icon={card.icon} style={{ fontSize: "32px" }} />
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+            ))}
           </IonRow>
         </IonGrid>
       </IonContent>

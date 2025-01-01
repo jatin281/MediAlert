@@ -69,7 +69,7 @@ const OnboardingGenderDOB: React.FC = () => {
           ></IonInput>
         </IonItem>
 
-        {/* Next and Skip Buttons */}
+        {/* Next Button */}
         <IonGrid>
           <IonRow>
             <IonCol>
@@ -78,7 +78,7 @@ const OnboardingGenderDOB: React.FC = () => {
                 className="onboarding-next-button"
                 onClick={handleNext}
               >
-                Next
+                Done
               </IonButton>
             </IonCol>
           </IonRow>

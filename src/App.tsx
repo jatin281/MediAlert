@@ -3,7 +3,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { useEffect } from 'react';
-import Home from './pages/Home';
+import AuthRoute from './components/AuthRoute';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,14 +34,15 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import LoginScreen from './pages/LoginScreen';
-import OTPScreen from './pages/OtpScreen';
+import LoginScreen from './pages/Authentication/LoginScreen';
+import OTPScreen from './pages/Authentication/OtpScreen';
 import HomeScreen from './pages/HomeScreen';
 import MedicineListScreen from './pages/Medicines/MedicineListScreen';
-import PrescriptionsScreen from './pages/PrescriptionsScreen';
+import PrescriptionsScreen from './pages/Prescriptions/PrescriptionsScreen';
 import OnboardingName from './pages/Onboarding/OnboardingName';
 import OnboardingGenderDOB from './pages/Onboarding/OnboardingGenderDOB';
 import AlertScreen from './pages/Alerts/AlertScreen';
+// import TrackScreen from './pages/track/TrackScreen';
 
 setupIonicReact();
 
@@ -64,19 +65,18 @@ return(
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-      <Route exact path="/name" component={OnboardingName}/>
-      <Route exact path="/gender-dob" component={OnboardingGenderDOB}/>
-        <Route exact path="/login">
-          <LoginScreen />
-        </Route>
-        <Route exact path="/otp" component={OTPScreen}/>
-        <Route exact path="/home" component={HomeScreen}/>
-        <Route exact path="/medicine-list" component={MedicineListScreen}/>
-        <Route exact path="/prescriptions" component={PrescriptionsScreen}/>
-        <Route exact path="/alerts" component={AlertScreen}/>
-        <Route exact path="/">
-          <Redirect to="/home"/>
-        </Route>
+      <AuthRoute exact path="/login" component={LoginScreen} requiresAuth={false} />
+          <AuthRoute exact path="/otp" component={OTPScreen} requiresAuth={false} />
+          <AuthRoute exact path="/onboarding-name" component={OnboardingName} requiresAuth={true} />
+          <AuthRoute exact path="/gender-dob" component={OnboardingGenderDOB} requiresAuth={true} />
+          <AuthRoute exact path="/home" component={HomeScreen} requiresAuth={true} />
+          <AuthRoute exact path="/medicine-list" component={MedicineListScreen} requiresAuth={true} />
+          <AuthRoute exact path="/prescriptions" component={PrescriptionsScreen} requiresAuth={true} />
+          <AuthRoute exact path="/alerts" component={AlertScreen} requiresAuth={true} />
+          {/* <AuthRoute exact path="/track" component={TrackScreen} requiresAuth={true} /> */}
+          <Route exact path="/">
+            <AuthRoute path="/" component={HomeScreen} requiresAuth={true} />
+          </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

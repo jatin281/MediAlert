@@ -104,3 +104,23 @@
     color: rgb(251, 146, 60);
     font-size: 20px;
   }
+
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .ion-padding {
+    padding: 16px;
+  }
+  
