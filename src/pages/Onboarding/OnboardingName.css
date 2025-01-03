@@ -1,28 +1,33 @@
 .onboarding-container {
-    background-color: #ffffff;
-    height: 100%;
-  }
-  
-  .onboarding-heading {
-    margin-top: 20px;
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .onboarding-subheading {
-    margin-top: 10px;
-    font-size: 1rem;
-    color: #6b7280; /* Tailwind Gray-500 equivalent */
-  }
-  
-  .onboarding-input-container {
-    margin-top: 20px;
-  }
-  
-  .onboarding-next-button {
-    margin-top: 40px;
-    --background: #6366f1; /* Tailwind Indigo-500 */
-    --background-hover: #4f46e5; /* Tailwind Indigo-600 */
-    --border-radius: 8px;
-  }
-  
+  background-color: #ffffff;
+  height: 100%;
+}
+
+.onboarding-heading {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.onboarding-subheading {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 40px; /* Added spacing after the subheading */
+}
+
+.input-spacing {
+  margin-top: 20px; /* Additional container for input spacing */
+}
+
+.onboarding-input-container {
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+}
+
+.onboarding-next-button {
+  margin-top: 40px;
+  --background: #6366f1;
+  --background-hover: #4f46e5;
+  --border-radius: 8px;
+}

@@ -1,67 +1,152 @@
-// import React, { useEffect, useRef } from 'react';
-// import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
-// import { GoogleMap } from '@capacitor/google-maps';
+import React, { useEffect, useRef, useState } from 'react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSpinner } from '@ionic/react';
+import { GoogleMap } from '@capacitor/google-maps';
+import { Geolocation } from '@capacitor/geolocation';
 
-// const TrackScreen: React.FC = () => {
-//   const mapRef = useRef<HTMLDivElement>(null);
-//   let map: GoogleMap | null = null;
+interface Pharmacy {
+  lat: number;
+  lng: number;
+  name: string;
+}
 
-//   useEffect(() => {
-//     const initializeMap = async () => {
-//       if (!mapRef.current) return;
+const TrackScreen: React.FC = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>('');
+  let map: GoogleMap | null = null;
 
-//       map = await GoogleMap.create({
-//         id: 'nearby-pharmacies-map',
-//         element: mapRef.current,
-//         apiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
-//         config: {
-//           center: {
-//             lat: 28.6139, // Replace with user's latitude
-//             lng: 77.2090, // Replace with user's longitude
-//           },
-//           zoom: 14,
-//         },
-//       });
+  useEffect(() => {
+    let resizeObserver: ResizeObserver;
 
-//       // Add nearby pharmacies markers (example data)
-//       const pharmacies = [
-//         { lat: 28.6149, lng: 77.2098, name: 'Pharmacy 1' },
-//         { lat: 28.6155, lng: 77.2102, name: 'Pharmacy 2' },
-//       ];
+    const initializeMap = async () => {
+      if (!mapRef.current) return;
 
-//       pharmacies.forEach((pharmacy) => {
-//         map?.addMarker({
-//           coordinate: { lat: pharmacy.lat, lng: pharmacy.lng },
-//           title: pharmacy.name,
-//         });
-//       });
-//     };
+      try {
+        // Wait for the container to have size
+        await new Promise<void>((resolve) => {
+          resizeObserver = new ResizeObserver((entries) => {
+            const entry = entries[0];
+            if (entry && entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+              resolve();
+            }
+          });
+          resizeObserver.observe(mapRef.current!);
+        });
 
-//     initializeMap();
+        // Get current position
+        const position = await Geolocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 5000
+        });
 
-//     return () => {
-//       if (map) {
-//         map.destroy();
-//         map = null;
-//       }
-//     };
-//   }, []);
+        const userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-//   return (
-//     <IonPage>
-//       <IonHeader>
-//         <IonToolbar>
-//           <IonTitle>Nearby Pharmacies</IonTitle>
-//         </IonToolbar>
-//       </IonHeader>
-//       <IonContent>
-//         <div
-//           ref={mapRef}
-//           style={{ width: '100%', height: '100%', position: 'absolute' }}
-//         />
-//       </IonContent>
-//     </IonPage>
-//   );
-// };
+        // Create map
+        map = await GoogleMap.create({
+          id: 'nearby-pharmacies-map',
+          element: mapRef.current,
+          apiKey: 'AIzaSyBSvmnyd5nkQAQfYEEgELV3nA-eeMJNbZ0',
+          config: {
+            center: userLocation,
+            zoom: 14,
+            // Explicitly set dimensions based on container
+            width: mapRef.current.offsetWidth,
+            height: mapRef.current.offsetHeight
+          },
+        });
 
-// export default TrackScreen;
+        // Add markers and enable location after map is ready
+        await map.addMarker({
+          coordinate: userLocation,
+          title: 'Your Location',
+          iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        });
+
+        const pharmacies: Pharmacy[] = [
+          { lat: userLocation.lat + 0.001, lng: userLocation.lng + 0.001, name: 'Pharmacy 1' },
+          { lat: userLocation.lat - 0.001, lng: userLocation.lng + 0.002, name: 'Pharmacy 2' },
+          { lat: userLocation.lat + 0.002, lng: userLocation.lng - 0.001, name: 'Pharmacy 3' },
+        ];
+
+        for (const pharmacy of pharmacies) {
+          await map.addMarker({
+            coordinate: { lat: pharmacy.lat, lng: pharmacy.lng },
+            title: pharmacy.name,
+            iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+          });
+        }
+
+        await map.enableCurrentLocation(true);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error initializing map:', error);
+        setError('Failed to initialize map. Please check permissions and try again.');
+        setLoading(false);
+      }
+    };
+
+    initializeMap();
+
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      if (map) {
+        map.destroy();
+        map = null;
+      }
+    };
+  }, []);
+
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Nearby Pharmacies</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        {loading && (
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 999
+          }}>
+            <IonSpinner name="circles" />
+          </div>
+        )}
+        {error && (
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 999,
+            color: 'red',
+            backgroundColor: 'white',
+            padding: '1rem',
+            borderRadius: '0.5rem'
+          }}>
+            {error}
+          </div>
+        )}
+        <div 
+          ref={mapRef}
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            minHeight: '100vh'
+          }}
+        />
+      </IonContent>
+    </IonPage>
+  );
+};
+
+export default TrackScreen;

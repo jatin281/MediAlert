@@ -13,17 +13,20 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/react';
+import { useLocation } from 'react-router-dom'; // Import to get query params
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Browser } from '@capacitor/browser';
 import { PDFDocument } from 'pdf-lib';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db, storage } from '../../firebaseConfig'; // Import your Firebase config
-import { base64ToBlob } from '../../utils/base64ToBlob'; // Import utility function
 
 const PrescriptionsScreen: React.FC = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const userId = params.get('userId'); // Get userId from the URL query parameters
+
   const [prescriptions, setPrescriptions] = useState<{ id: string; name: string; url: string }[]>([]);
-  const userId = 'USER_ID'; // Replace with the logged-in user's ID
 
   // Fetch prescriptions from Firestore
   const fetchPrescriptions = async () => {
@@ -46,20 +49,15 @@ const PrescriptionsScreen: React.FC = () => {
 
   useEffect(() => {
     fetchPrescriptions();
-  }, []);
-
-  // Utility function to convert array buffer to base64
-  const bufferToBase64 = (buffer: ArrayBuffer): string => {
-    const byteArray = new Uint8Array(buffer);
-    let binary = '';
-    byteArray.forEach(byte => {
-      binary += String.fromCharCode(byte);
-    });
-    return window.btoa(binary); // Use window.btoa() for base64 encoding
-  };
+  }, [userId]);
 
   // Handle uploading prescription
   const handleUploadPrescription = async (source: CameraSource) => {
+    if (!userId) {
+      alert('User ID not found. Cannot upload prescription.');
+      return;
+    }
+
     try {
       const photo = await Camera.getPhoto({
         quality: 90,

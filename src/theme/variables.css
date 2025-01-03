@@ -1,2 +1,14 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+html,
+body {
+  background-color: transparent !important;
+}
+
+ion-app {
+  background-color: transparent !important;
+}
+
+ion-content {
+  --background: transparent !important;
+}

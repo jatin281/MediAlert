@@ -18,6 +18,7 @@ export const useAlerts = (userId: string | null) => {
       if (value) {
         const savedAlerts = JSON.parse(value);
         setAlerts(savedAlerts);
+        console.log("saved alerts:",savedAlerts)
       }
     } catch (error) {
       console.error('Error loading saved alerts:', error);
@@ -31,6 +32,7 @@ export const useAlerts = (userId: string | null) => {
         key: `alerts_${userId}`,
         value: JSON.stringify(updatedAlerts)
       });
+      console.log("save alerts:",updatedAlerts)
     } catch (error) {
       console.error('Error saving alerts:', error);
     }

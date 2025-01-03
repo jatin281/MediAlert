@@ -1,0 +1,47 @@
+.login-card {
+    margin: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .input-container {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .phone-label {
+    display: block;
+    font-size: 16px;
+    color: #4B5563;
+    margin-bottom: 16px; /* This adds space between label and input */
+    padding-left: 4px;
+  }
+  
+  .phone-input-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+    margin-top: 8px;
+  }
+  
+  .phone-input {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    --background: #F3F4F6;
+    --border-radius: 8px;
+    margin-top: 8px;
+  }
+  
+  .send-otp-button {
+    margin-top: 24px;
+    --border-radius: 8px;
+    height: 48px;
+    font-weight: 500;
+  }

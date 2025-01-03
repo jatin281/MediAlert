@@ -16,6 +16,7 @@ import {
   Auth 
 } from 'firebase/auth';
 import { auth } from "../firebaseConfig";
+import './LoginForm.css'; // Make sure to create this CSS file
 
 const LoginForm: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -24,7 +25,7 @@ const LoginForm: React.FC = () => {
 
   const initializeRecaptcha = () => {
     if (!isRecaptchaReady) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, // Move auth to first parameter
+      window.recaptchaVerifier = new RecaptchaVerifier(auth,
         "recaptcha-container",
         {
           size: "invisible",
@@ -58,26 +59,36 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <IonCard>
+    <IonCard className="login-card">
       <IonCardHeader>
-        <IonCardTitle>Login</IonCardTitle>
+        <IonCardTitle className="login-title">Login</IonCardTitle>
       </IonCardHeader>
 
       <IonCardContent>
-        <IonItem>
-          <IonLabel position="floating">Phone Number</IonLabel>
-          <IonInput
-            type="tel"
-            maxlength={10}
-            placeholder="Enter your phone number"
-            value={phoneNumber}
-            onIonChange={(e) => setPhoneNumber(e.detail.value!)}
-          />
-        </IonItem>
+        <div className="input-container">
+          <IonLabel position="stacked" className="phone-label">
+            Phone Number
+          </IonLabel>
+          <IonItem lines="none" className="phone-input-item">
+            <IonInput
+              type="tel"
+              maxlength={10}
+              placeholder="Enter your phone number"
+              value={phoneNumber}
+              onIonChange={(e) => setPhoneNumber(e.detail.value!)}
+              className="phone-input"
+            />
+          </IonItem>
+        </div>
 
         <div id="recaptcha-container"></div>
 
-        <IonButton expand="block" color="primary" onClick={handleSendOTP}>
+        <IonButton 
+          expand="block" 
+          color="primary" 
+          onClick={handleSendOTP}
+          className="send-otp-button"
+        >
           Send OTP
         </IonButton>
       </IonCardContent>

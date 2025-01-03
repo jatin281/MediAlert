@@ -42,7 +42,8 @@ import PrescriptionsScreen from './pages/Prescriptions/PrescriptionsScreen';
 import OnboardingName from './pages/Onboarding/OnboardingName';
 import OnboardingGenderDOB from './pages/Onboarding/OnboardingGenderDOB';
 import AlertScreen from './pages/Alerts/AlertScreen';
-// import TrackScreen from './pages/track/TrackScreen';
+import ProfileScreen from './pages/Profile/ProfileScreen';
+import TrackScreen from './pages/track/TrackScreen';
 
 setupIonicReact();
 
@@ -73,7 +74,8 @@ return(
           <AuthRoute exact path="/medicine-list" component={MedicineListScreen} requiresAuth={true} />
           <AuthRoute exact path="/prescriptions" component={PrescriptionsScreen} requiresAuth={true} />
           <AuthRoute exact path="/alerts" component={AlertScreen} requiresAuth={true} />
-          {/* <AuthRoute exact path="/track" component={TrackScreen} requiresAuth={true} /> */}
+          <AuthRoute exact path="/profile" component={ProfileScreen} requiresAuth={true} />
+          <AuthRoute exact path="/track" component={TrackScreen} requiresAuth={true} />
           <Route exact path="/">
             <AuthRoute path="/" component={HomeScreen} requiresAuth={true} />
           </Route>

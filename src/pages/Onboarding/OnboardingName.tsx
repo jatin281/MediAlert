@@ -15,11 +15,11 @@ import {
   IonCol,
 } from "@ionic/react";
 
-import "./OnboardingName.css"; // Import the styles
-import useOnboarding from "../../hooks/useOnboarding"; // Hook for logic separation
+import "./OnboardingName.css";
+import useOnboarding from "../../hooks/useOnboarding";
 
 const OnboardingName: React.FC = () => {
-  const { name, handleNameChange, handleNext } = useOnboarding(); // Custom hook
+  const { name, handleNameChange, handleNext } = useOnboarding();
 
   return (
     <IonPage>
@@ -43,15 +43,17 @@ const OnboardingName: React.FC = () => {
         </IonGrid>
 
         {/* Input Field */}
-        <IonItem lines="none" className="onboarding-input-container">
-          <IonLabel position="stacked">Full Name</IonLabel>
-          <IonInput
-            placeholder="Full Name"
-            value={name}
-            onIonChange={(e) => handleNameChange(e.detail.value!)}
-            clearInput
-          ></IonInput>
-        </IonItem>
+        <div className="input-spacing">
+          <IonItem lines="none" className="onboarding-input-container">
+            <IonLabel position="stacked">Full Name</IonLabel>
+            <IonInput
+              placeholder="Full Name"
+              value={name}
+              onIonChange={(e) => handleNameChange(e.detail.value!)}
+              clearInput
+            ></IonInput>
+          </IonItem>
+        </div>
 
         {/* Next Button */}
         <IonButton

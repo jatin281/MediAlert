@@ -362,7 +362,7 @@ const AlertScreen: React.FC = () => {
       setToastMessage(isEnabled ? 'Alert disabled' : 'Alert enabled');
       setToastColor('success');
       setShowToast(true);
-    } catch (error) {
+    } catch (error) { 
       console.error('Error toggling alert:', error);
       setToastMessage('Failed to toggle alert. Please try again.');
       setToastColor('danger');
